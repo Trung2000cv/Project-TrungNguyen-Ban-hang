@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<WebBanHang.Context.Comment>
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách ý kiến từ người dùng</h2>
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Id Người dùng
+        </th>
+        <th>
+            Ngày gửi
+        </th>
+        <th>
+            Ý kiến từ người dùng
+        </th>
+        <th>
+            Phản hồi lại
+        </th>
+        <th>
+            Ngày trả lời
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUser)
+            </td>
+            <td>
+                @item.Day
+            </td>
+            <td>
+                @Html.Raw(item.UserComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdminRequest)
+            </td>
+            <td>
+                @item.Dayresquest
+            </td>
+            <td>
+                @Html.ActionLink("Phản hồi", "Edit", new { id = item.Id })
+
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.currentFilter }))

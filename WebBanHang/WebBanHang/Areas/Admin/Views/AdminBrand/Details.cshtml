@@ -1,0 +1,41 @@
+﻿@model WebBanHang.Context.Brand
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Brand</h4>
+    <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Tên hãng
+            </th>
+            <th>
+                Ảnh đại diện
+            </th>
+            <th>
+                Miêu tả
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Name
+            </td>
+            <td>
+                <img src="@Url.Content("~/Content/images/items/" + Model.Avatar)" width="100" />
+            </td>
+            <td>
+                @Model.Slug
+            </td>
+        </tr>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Trở lại", "Index")
+</p>

@@ -1,0 +1,56 @@
+﻿@model WebBanHang.Context.Order
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function myFunction() {
+        alert("Xác nhận hủy đơn hàng");
+    }
+</script>
+<div class="row btn-primary" height: 70px; color:white; text-align:center;margin: 200px 50px;">
+    <h5 style="text-align: center; margin: 0 auto; line-height: 70px">Xác nhận hủy đơn hàng</h5>
+</div>
+<div style="margin-top:50Px">
+
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Tên đơn hàng
+            </th>
+            <th>
+                Người đặt
+            </th>
+            <th>
+                Ngày đặt
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Name
+            </td>
+            <td>
+                @Model.User.FirstName @Model.User.LastName
+            </td>
+            <td>
+                @Model.CreatedOnUtc
+            </td>
+        </tr>
+    </table>
+    <div style="width: 50px; display:flex; margin: 0 auto">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color" style="margin-bottom:100px; margin-top:50px">
+                <input onclick="myFunction()" type="submit" value="Hủy" class="btn btn-warning" />
+
+            </div>
+        }
+
+    </div>
+    <div>
+        @Html.ActionLink("Quay trở lại", "Index")
+    </div>
+</div>

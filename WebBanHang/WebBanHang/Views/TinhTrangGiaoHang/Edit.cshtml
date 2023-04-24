@@ -1,0 +1,73 @@
+﻿@model WebBanHang.Context.Order
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row btn-primary" height: 70px; color:white; text-align:center;margin: 50px 50px;">
+    <h5 style="text-align: center; margin: 0 auto; line-height: 70px">Xác nhận đơn hàng</h5>
+</div>
+<script>
+    function myFunction() {
+        alert("Bạn đã nhận đơn hàng");
+    }
+</script>
+<section class="section-content padding-y">
+    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+        <article class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        <label><b>Tên đơn hàng</b></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><b>Trạng thái </b></label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Status, ViewBag.ProductType as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Ngày đặt hàng</b></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.CreatedOnUtc, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CreatedOnUtc, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><b>Ngày giao hàng</b></label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.NgayGiaHang, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NgayGiaHang, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input onclick="myFunction()" type="submit" value="Xác nhận" class="btn btn-warning" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
+        </article>
+    </div>
+
+
+</section>

@@ -1,0 +1,50 @@
+﻿@model WebBanHang.Context.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Họ Tên
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Password
+        </th>
+        <th>Quyền</th>
+    </tr>
+    <tr>
+        <td>@Model.FirstName @Model.LastName</td>
+        <td>
+            @Model.Phone
+        </td>
+        <td>
+            @Model.DiaChi
+        </td>
+        <td>
+            @Model.Email
+        </td>
+        <td>
+            @Model.PassWord
+        </td>
+        <td>
+            @Model.IsAdmin
+        </td>
+</table>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

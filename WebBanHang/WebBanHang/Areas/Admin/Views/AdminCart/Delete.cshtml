@@ -1,0 +1,65 @@
+﻿@model WebBanHang.Context.Order
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa đơn hàng</h2>
+
+<h3>Bạn muốn xóa đơn hàng này?</h3>
+<div>
+    <h4>Order</h4>
+    <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Tên đơn hàng
+            </th>
+            <th>
+                Ngày đặt hàng
+            </th>
+            <th>
+                Ngày giao hàng
+            </th>
+            <th>
+                Người đặt hàng
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Name
+            </td>
+            <td>
+                @Model.CreatedOnUtc
+            </td>
+            <td>
+                @Model.NgayGiaHang
+            </td>
+            <td>
+                @Model.User.FirstName @Model.User.LastName
+            </td>
+            <td>
+                @Model.User.Phone
+            </td>
+         
+            <td>
+                @Model.User.DiaChi
+            </td>
+            
+        </tr>
+    </table>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" onclick="alert('Xóa đơn hàng')"/> |
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    }
+</div>

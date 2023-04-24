@@ -1,0 +1,46 @@
+﻿@model WebBanHang.Context.Comment
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script>
+    function myFunction() {
+        alert("Ý kiến của bạn đã được gửi");
+    }
+</script>
+<div class="row btn-primary" height: 70px; color:white; text-align:center;margin: 50px 50px;">
+    <h5 style="text-align: center; margin: 0 auto; line-height: 70px">Gửi ý kiến của bạn</h5>
+</div>
+
+@using (Html.BeginForm("Index", "Comment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+     
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Session["Email"]
+       
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.UserComment, new { htmlAttribute = new { @class = "form-control", @id = "UserComment" } })
+            <script type="text/javascript" lang="javascrip">
+                CKEDITOR.replace("UserComment")
+            </script>
+            @Html.ValidationMessageFor(model => model.UserComment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input onclick="myFunction()" type="submit" value="Gửi" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+   <a href="@Url.Action("Index", "Home")">Quay Lại</a>
+</div>

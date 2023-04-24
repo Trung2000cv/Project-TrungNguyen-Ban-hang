@@ -1,0 +1,105 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebBanHang.Context.Order>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row btn-primary" height: 70px; color:white; text-align:center;margin: 50px 50px;">
+    <h5 style="text-align: center; margin: 0 auto; line-height: 70px">Tình trạng giao hàng</h5>
+</div>
+
+<p>  @ViewBag.Tb</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Đơn hàng
+        </th>
+        <th>
+            Ngày đặt
+        </th>
+        <th>
+            Ngày giao
+        </th>
+        <th>
+            Trạng thái
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        if (item.NgayGiaHang != null)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.CreatedOnUtc
+                </td>
+                <td>
+                    @item.NgayGiaHang
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <b style="color: blue">Chờ xác nhận</b>
+                    }
+                    @if (item.Status == 2)
+                    {
+                        <b style="color:green">Đã nhận hàng</b>
+                    }
+                    @if (item.Status == 3)
+                    {
+                        <b style="color: black">Đang giao hàng</b>
+                    }
+                    @if (item.Status == 4)
+                    {
+                        <b style="color:red">Đơn hàng dã bị hủy</b>
+                    }
+
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info">
+                        @Html.ActionLink("Xác nhận đơn hàng", "Edit", new { id = item.Id })
+                    </button>
+                    <button type="button" class="btn btn-warning"> @Html.ActionLink("Chi Tiết", "Details", new { id = item.Id }) </button>
+                </td>
+            </tr>
+
+        }
+        else
+        {
+            <tr>
+                <td>
+                    @item.Name
+
+                </td>
+                <td>
+                    @item.CreatedOnUtc
+                </td>
+                <td>
+                    Chưa xác nhận
+                </td>
+                <td>
+                    <p style="color: red">
+                        <b>  Chưa xác nhận</b>
+                    </p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">
+                        @Html.ActionLink("Hủy đơn hàng", "Delete", new { id = item.Id })
+                    </button>
+                    <button type="button" class="btn btn-warning"> @Html.ActionLink("Chi Tiết", "Details", new { id = item.Id }) </button>
+                </td>
+            </tr>
+        }
+       
+    }
+</table>
+
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.currentFilter }))

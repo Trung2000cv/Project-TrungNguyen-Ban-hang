@@ -1,0 +1,123 @@
+﻿@model IPagedList<WebBanHang.Context.Product>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "CategoryProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+    <section class="section-content padding-y">
+        <div class="container">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <ol class="breadcrumb float-left">
+                       
+                        <li class="breadcrumb-item active"> Có @ViewBag.Count sản phẩm </li>
+                    </ol>
+                </div> <!-- card-body .// -->
+            </div> <!-- card.// -->
+            <!-- ============================ FILTER TOP END.// ================================= -->
+
+
+            <div class="row">
+                <aside class="col-md-2">
+
+                </aside> <!-- col.// -->
+                <main class="col-md-10">
+
+
+                    <header class="mb-3">
+                    </header><!-- sect-heading -->
+                    @foreach (var item in Model)
+                    {
+                        <article class="card card-product-list">
+                            <div class="row no-gutters">
+                                <aside class="col-md-3">
+                                    <a href="@Url.Action("Details", "Product", new { Id = item.Id})" class="img-wrap">
+                                        <span class="badge badge-danger"> NEW </span>
+                                        <img src="~/Content/images/items/@item.Avater">
+                                    </a>
+                                </aside> <!-- col.// -->
+                                <div class="col-md-6">
+                                    <div class="info-main">
+                                        <a href="#" class="h5 title"> @item.Name</a>
+                                        <div class="rating-wrap mb-2">
+                                            <ul class="rating-stars">
+                                                <li style="width:100%" class="stars-active">
+                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                            </ul>
+                                            <div class="label-rating">9/10</div>
+                                        </div> <!-- rating-wrap.// -->
+
+                                        <p class="mb-3">
+                                            <span class="tag"> <i class="fa fa-check"></i> Verified</span>
+                                            <span class="tag"> @item.Year </span>
+                                            <span class="tag"> @item.CPU Viewer </span>
+                                            <span class="tag"> @item.OS </span>
+                                        </p>
+
+                                        <p>
+                                            @Html.Raw(item.FullDescription)
+                                        </p>
+                                        <br />
+                                        <small>
+                                            @Html.Raw(item.ShortDes)
+                                        </small>
+
+                                    </div> <!-- info-main.// -->
+                                </div> <!-- col.// -->
+                                <aside class="col-sm-3">
+                                    <div class="info-aside">
+                                        <div class="price-wrap">
+                                            <span class="h5 price">Khuyến mãi @item.PriceDiscount</span>
+                                        </div> <!-- price-wrap.// -->
+                                        <small class="text-warning">@item.Price VND</small>
+                                    <br />
+                                        <small class="text-warning">@item.RAM GB</small>
+
+                                        <p class="text-muted mt-3">@item.Resolution inches</p>
+
+
+                                    </div> <!-- info-aside.// -->
+                                </aside> <!-- col.// -->
+                            </div> <!-- row.// -->
+                        </article> <!-- card-product .// -->
+                    }
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("CategoryProduct", new { page, currentFilter = ViewBag.currentFilter }))
+
+
+                </main> <!-- col.// -->
+
+            </div>
+
+        </div> <!-- container .//  -->
+    </section>
+    <section class="padding-y-lg bg-light border-top">
+        <div class="container">
+
+            <p class="pb-2 text-center">Phản hồi với tôi</p>
+
+            <div class="row justify-content-md-center">
+                <div class="col-lg-4 col-sm-6">
+
+                    <div class="btn btn-block btn-warning"> <i class="fa fa-envelope"></i><a href="@Url.Action("Index","Comment")">Tại đây</a></div>
+                    <small class="form-text">Chúng tôi sẽ cố gắng phản hồi lại bạn sớm nhất</small>
+                </div> <!-- col-md-6.// -->
+            </div>
+
+
+        </div>
+    </section>
+  
+
+

@@ -1,0 +1,157 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebBanHang.Context.Order>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: white;
+        }
+
+    button {
+        margin: 0 8px;
+    }
+</style>
+<div class="row" style="background-color: #29a6e6; height: 70px; color:white; text-align:center;margin-bottom: 50px;">
+    <h3 style="text-align: center; margin: 0 auto; line-height: 70px">Danh sách đơn đặt hàng</h3>
+</div>
+@using (Html.BeginForm("Index", "AdminCart", FormMethod.Get))
+{
+    <p>
+        Tìm tên sản phẩm: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" />
+    </p>
+}
+<div style="display: flex;">
+    @using (Html.BeginForm("Index", "AdminCart", FormMethod.Get))
+    {
+        <p>
+            <input type="text" name="ChoGiaoHang" id="ChoGiaoHang" style="display:none" />
+            <input type="submit" value="Chờ xác nhận" class="btn btn-warning" style="margin-right: 50px;" />
+        </p>
+    }
+    @using (Html.BeginForm("Index", "AdminCart", FormMethod.Get))
+    {
+        <p>
+            <input type="text" name="DaNhan" id="DaNhan" style="display:none" />
+            <input type="submit" value="Đã nhận " class="btn btn-success" />
+        </p>
+    }
+    @using (Html.BeginForm("Index", "AdminCart", FormMethod.Get))
+    {
+        <p>
+            <input type="text" name="XacNhan" id="XacNhan" style="display:none" />
+            <input type="submit" value="Đang giao hàng " class="btn btn-danger" style="margin-left: 50px;" />
+        </p>
+    }
+    @using (Html.BeginForm("Index", "AdminCart", FormMethod.Get))
+    {
+        <p>
+            <input type="text" name="Huy" id="Huy" style="display:none" />
+            <input type="submit" value="Đơn hàng đã hủy "style="margin-left: 50px; color:blue" />
+        </p>
+    }
+</div>
+<div>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Tên Đơn Hàng
+            </th>
+            <th>
+                ID Người Dùng
+            </th>
+            <th>
+                Ngày Đặt Hàng
+            </th>
+            <th>
+                Ngày Giao Hàng
+            </th>
+            <th>
+                Người nhận
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Trạng thái
+            </th>
+
+        <tr>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOnUtc)
+                </td>
+                <td>
+                    @item.NgayGiaHang
+                </td>
+                <td>
+                    @item.User.FirstName @item.User.LastName
+                </td>
+                <td>
+                    @item.User.Email
+                </td>
+                <td>
+                    @item.User.DiaChi
+                </td>
+                <td>
+                    @item.User.Phone
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <b style="color: blue">Chờ xác nhận</b>
+                    }
+                    @if (item.Status == 2)
+                    {
+                        <b style="color:green">Đã nhận hàng</b>
+                    }
+                    @if (item.Status == 3)
+                    {
+                       <b style="color: black">Đang giao hàng</b>
+                    }
+                    @if (item.Status == 4)
+                    {
+                        <b style="color:red">Đơn hàng đã bị hủy</b>
+                    }
+                </td>
+                <td>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-warning">@Html.ActionLink("Xác nhận", "Edit", new { id = item.Id }) </button>
+                        <button type="button" class="btn btn-info"> @Html.ActionLink("Xem", "Details", new { id = item.Id }) </button>
+                        <button type="button" class="btn btn-danger">@Html.ActionLink("Xóa ", "Delete", new { id = item.Id })</button>
+                        <button type="button" class="btn btn-danger">@Html.ActionLink("Hủy ", "HuyDonHang", new { id = item.Id })</button>
+                    </div>
+                </td>
+
+            </tr>
+        }
+
+        </table>
+    </div>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.currentFilter }))

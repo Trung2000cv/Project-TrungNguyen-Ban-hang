@@ -1,0 +1,125 @@
+﻿@model WebBanHang.Context.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa sản phẩm</h2>
+
+<h3>Bạn muốn xóa sản phẩm này?</h3>
+<div>
+    <h4>Sản phẩm @Model.Name</h4>
+    <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Hãng
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Miêu tả vắn tắt
+            </th>
+            <th>
+                Miêu tả chi tiết
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Giá khuyến mãi
+            </th>
+            <th>
+                Năm sản xuất
+            </th>
+            <th>
+                CPU
+            </th>
+            <th>
+                RAM
+            </th>
+            <th>
+                Màu sắc
+            </th>
+            <th>
+                Hệ điều hành
+            </th>
+            <th>
+                Chất liệu
+            </th>
+            <th>
+                Tốc độ
+            </th>
+            <th>
+                Đánh giá
+            </th>
+            <th>
+                Pin
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Model.Name
+            </td>
+            <td>
+                @ViewBag.Name
+            </td>
+            <td>
+                <img src="@Url.Content("~/Content/images/items/" + Model.Avater)" width="100" />
+            </td>
+            <td>
+                @Model.ShortDes
+            </td>
+            <td>
+                @Model.FullDescription
+            </td>
+            <td>
+                @Model.Price VNĐ
+            </td>
+            <td>
+                @Model.PriceDiscount VNĐ
+            </td>
+            <td>
+                @Model.Year
+            </td>
+            <td>
+                @Model.CPU
+            </td>
+            <td>
+                @Model.RAM
+            </td>
+            <td>
+                @Model.Color
+            </td>
+            <td>
+                @Model.OS
+            </td>
+            <td>
+                @Model.Material
+            </td>
+            <td>
+                @Model.Speed HZ
+            </td>
+            <td>
+                @Model.point Sao
+            </td>
+            <td>
+                @Model.Battery MMA
+            </td>
+
+        </tr>
+    </table>
+    @using (Html.BeginForm("Delete", "Product", FormMethod.Post, new { enctype = "multipart/form-data"})) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input onclick="alert('Xác nhận xóa')" type="submit" value="Xóa" class="btn btn-default" /> |
+            @Html.ActionLink("Quay lại", "Index")
+        </div>
+    }
+</div>

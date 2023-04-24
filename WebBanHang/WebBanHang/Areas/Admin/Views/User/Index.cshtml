@@ -1,0 +1,87 @@
+﻿@model PagedList.IPagedList<WebBanHang.Context.User>
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: white;
+        }
+
+    button {
+        margin: 0 8px;
+    }
+</style>
+<div class="row" style="background-color: #29a6e6; height: 70px; color:white; text-align:center;margin-bottom: 50px;">
+    <h3 style="text-align: center; margin: 0 auto; line-height: 70px">Danh sách người dùng</h3>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tên người dùng
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+           Email
+        </th>
+     
+        <th>
+            Quyền
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+             @item.FirstName @item.LastName
+            </td>
+            <td>
+                @item.Phone
+            </td>
+            <td>
+                @item.DiaChi
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+           
+            <td>
+                @if(item.IsAdmin == true)
+                {
+                  <p>Admin</p>
+                }
+                else
+                {
+                    <p>Người dùng</p>
+                }
+            </td>
+            <td>
+               
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-info"> @Html.ActionLink("Xem", "Details", new { id = item.Id })</button>
+                    <button type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.Id })</button>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.currentFilter }))

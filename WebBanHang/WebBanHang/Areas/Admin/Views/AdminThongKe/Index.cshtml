@@ -1,0 +1,341 @@
+﻿
+@model WebBanHang.Models.Order_OrderDetailModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="background-color: #000000; height: 50px; color:white; text-align:center">
+    <h5 style="text-align: center; margin: 0 auto; line-height: 50px">Thống kê </h5>
+</div>
+<style>
+    select {
+        width: 660px;
+        border-color: cadetblue;
+        border-radius: 5px;
+        border-style: inset;
+        padding: 4px 4px;
+    }
+</style>
+<table class="table table-bordered">
+    <tr>
+        <th>Tên sản phẩm bán chạy nhất</th>
+    </tr>
+    @foreach (var sp in ViewBag.lstSpMax)
+    {
+        <tr>
+            <td>
+                @sp
+            </td>
+        </tr>
+    }
+
+</table>
+<p> với số lượng : <b>@ViewBag.slbc</b> sản phẩm</p>
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+
+                <h5>@String.Format("{0:0,0}", ViewBag.DoanhThu) VND</h5>
+
+                <p>Tổng doanh thu</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h5>@ViewBag.tongSanPham Sản phẩm</h5>
+
+                <p>Được đặt hàng</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h5>@ViewBag.soluong</h5>
+
+                <p>Đơn hàng</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h5>@ViewBag.songuoidung</h5>
+
+                <p>Người dùng</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("Index", "AdminThongKe", FormMethod.Get))
+    {
+        <p>
+            <input type="date" name="start" />
+            đến
+            <input type="date" name="end" />
+            <input type="submit" value="Tìm kiếm" />
+        </p>
+    }
+</div>
+<div class="row" style="background-color: #29a6e6; height: 50px; color:white; text-align:center">
+    <h4 style="text-align: center; margin: 0 auto; line-height: 50px">Thống kê các đơn hàng được đặt theo ngày đã chọn từ @ViewBag.start đến  @ViewBag.end</h4>
+</div>
+
+<div style="display:flex;">
+    <div class="col-lg-3 col-6" style="margin: 100px 50px;">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h5>@ViewBag.sodh đơn hàng </h5>
+
+                <p>@String.Format("{0:0,0}", ViewBag.sumTien) VNĐ</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer" id="moreinfo">Xem danh sách<i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6" style="margin: 100px 50px;">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h5>@ViewBag.sosp Sản phẩm</h5>
+
+                <p>Được đặt hàng</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer" id="more-info-2">Xem danh sách<i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6" style="margin: 100px 50px;">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h5>@ViewBag.OrderDone đơn hàng</h5>
+
+                <p>Đã thanh toán:  @String.Format("{0:0,0}", ViewBag.DoanhThuTheoThang) VNĐ</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer" id="more-info-2">Xem danh sách<i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row" style="background-color: #29a6e6; height: 50px; color:white; text-align:center">
+    <h4 style="text-align: center; margin: 0 auto; line-height: 50px">Danh sách các sản phẩm được đặt theo ngày đã chọn từ @ViewBag.start đến  @ViewBag.end</h4>
+</div>
+<div style="display: flex">
+    <table class="table table-bordered">
+        <tr>
+            <td>Các sản phẩm được đặt nhiều nhất  <b>@ViewBag.start </b>đến  <b> @ViewBag.end </b> với số lượng <b>@ViewBag.slOfSP</b> sản phẩm</td>
+        </tr>
+
+        @if (ViewBag.SortMax != null)
+        {
+            foreach (var item in ViewBag.SortMax)
+            {
+                <tr>
+                    <td>
+
+                        @item
+
+                    </td>
+
+                </tr>
+            }
+        }
+    </table>
+    <table class="table table-bordered" style="margin: 50px; display: none" id="table">
+        <tr>
+            <th>
+                Tên đơn hàng
+            </th>
+            <th>
+                Ngày đặt hàng
+            </th>
+            <th>
+                Trạng thái
+            </th>
+            <th>
+                <button id="btn1" class="btn btn-warning"> ẩn </button>
+            </th>
+        </tr>
+
+        @foreach (var item in Model.ListOrder)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.CreatedOnUtc
+                </td>
+                <th>
+                    @if (item.Status == 1)
+                    {
+                        <p style="color:black">Chờ xác nhận</p>
+                    }
+                    else
+                    {
+                        if (item.Status == 2)
+                        {
+
+
+                            <p style="color:green">Đã nhận hàng</p>
+                        }
+                        else
+                        {
+                            <p style="color:red">Đang giao hàng</p>
+                        }
+
+                    }
+
+                </th>
+            </tr>
+        }
+
+    </table>
+    <table class="table table-bordered" style="margin: 50px; display:none" id="table-2">
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+                <th>
+                    Giá tiền
+                </th>
+                <th>
+                    Ngày đặt hàng
+                </th>
+                <th>
+                    <button id="btn2" class="btn btn-warning"> ẩn </button>
+                </th>
+            </tr>
+            @foreach (var detai in Model.ListOrderDetail)
+            {
+                <tr>
+                    <td>
+                        @detai.SanPham
+                    </td>
+                    <td>
+                        @detai.Quantity
+                    </td>
+                    <td>
+                        @detai.DonGia
+                    </td>
+                    <td>
+
+                        @String.Format("{0:0,0}", (detai.DonGia * detai.Quantity)) VNĐ
+                    </td>
+                    <td>
+                        @detai.NgayDatHang
+                    </td>
+                </tr>
+            }
+        </table>
+</div>
+
+<div class="row" style="background-color: #29a6e6; height: 50px; color:white; text-align:center">
+    <h4 style="text-align: center; margin: 0 auto; line-height: 50px">Danh sách các đơn hàng đã thanh toán theo ngày đã chọn từ @ViewBag.start đến  @ViewBag.end</h4>
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tên đơn hàng
+        </th>
+        <th>
+            Trạng thái
+        </th>
+    </tr>
+    @foreach (var item in Model.lstDonHang)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                Đã thanh toán
+            </td>
+        </tr>
+    }
+</table>
+<div class="row" style="background-color: #29a6e6; height: 50px; color:white; text-align:center">
+    <h4 style="text-align: center; margin: 0 auto; line-height: 50px">Danh sách sản phẩm đã thanh toán  theo ngày đã chọn từ @ViewBag.start đến  @ViewBag.end</h4>
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Đơn giá</th>
+    </tr>
+    @foreach (var item in Model.DaThanhToan)
+    {
+        <tr>
+            <td>
+                @item.SanPham
+            </td>
+            <td>
+                @item.Quantity
+            </td>
+            <td>
+
+                @String.Format("{0:0,0}", item.DonGia) VNĐ
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    {
+        document.getElementById("moreinfo").onclick = function () {
+            document.getElementById("table").style.display = 'block';
+        };
+        document.getElementById("btn1").onclick = function () {
+            document.getElementById("table").style.display = 'none';
+        };
+        document.getElementById("btn2").onclick = function () {
+            document.getElementById("table-2").style.display = 'none';
+        };
+        document.getElementById("more-info-2").onclick = function () {
+            document.getElementById("table-2").style.display = 'block';
+        };
+
+    }
+
+</script>

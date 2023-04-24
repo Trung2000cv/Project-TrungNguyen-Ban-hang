@@ -1,0 +1,121 @@
+﻿@model WebBanHang.Context.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết sản phẩm</h2>
+
+<div style="margin-left: 400px;">
+    <h4>Sản Phẩm @Model.Name</h4>
+    <hr />
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tên sản phẩm
+        </th>
+        <th>
+            Hãng
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            Miêu tả vắn tắt
+        </th>
+        <th>
+            Miêu tả chi tiết
+        </th>
+        <th>
+            Giá
+        </th>
+        <th>
+            Giá khuyến mãi
+        </th>
+        <th>
+            Năm sản xuất
+        </th>
+        <th>
+            CPU
+        </th>
+        <th>
+            RAM
+        </th>
+        <th>
+            Màu sắc
+        </th>
+        <th>
+            Hệ điều hành
+        </th>
+        <th>
+            Chất liệu
+        </th>
+        <th>
+            Tốc độ
+        </th>
+        <th>
+            Đánh giá
+        </th>
+        <th>
+            Pin
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @Model.Name
+        </td>
+        <td>
+            @ViewBag.Name
+        </td>
+        <td>
+            <img src="@Url.Content("~/Content/images/items/" + Model.Avater)" width="100" />
+        </td>
+        <td>
+            @Model.ShortDes
+        </td>
+        <td>
+           @Html.Raw(Model.FullDescription)
+        </td>
+        <td>
+            @String.Format("{0:0,0}",Model.Price) VNĐ
+        </td>
+        <td>
+           
+            @String.Format("{0:0,0}",Model.PriceDiscount) VNĐ
+        </td>
+        <td>
+            @Model.Year
+        </td>
+        <td>
+            @Model.CPU
+        </td>
+        <td>
+            @Model.RAM
+        </td>
+        <td>
+            @Model.Color
+        </td>
+        <td>
+            @Model.OS
+        </td>
+        <td>
+            @Model.Material
+        </td>
+        <td>
+            @Model.Speed HZ
+        </td>
+        <td>
+            @Model.point Sao
+        </td>
+        <td>
+            @Model.Battery MMA
+        </td>
+
+    </tr>
+</table>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Quay lại", "Index")
+</p>

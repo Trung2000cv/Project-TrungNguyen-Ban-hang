@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebBanHang.Context.OrderDetail>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết đơn hàng</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+           Số lượng
+        </th>
+        <th>
+           Ngày đặt hàng
+        </th>
+       
+        <th>
+            Giá
+        </th>
+        <th>
+          Tên đơn hàng
+        </th>
+        <th>
+           Tên sản phẩm
+        </th>
+        <th>
+            Thành tiền
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayDatHang)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.DonGia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+        <td>
+         @(item.Quantity * item.DonGia)
+        </td>
+       
+    </tr>
+}
+<tr>
+    <td>
+   Tổng tiền: @ViewBag.Sum VNĐ
+</tr>
+</table>

@@ -1,0 +1,149 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebBanHang.Context.Product>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: white;
+        }
+
+    button {
+        margin: 0 8px;
+    }
+</style>
+<div class="row" style="background-color: #29a6e6; height: 70px; color:white; text-align:center;margin-bottom: 50px;">
+    <h3 style="text-align: center; margin: 0 auto; line-height: 70px">Danh sách sản phẩm</h3>
+</div>
+<p>
+    <button class="btn btn-primary">@Html.ActionLink("Thêm mới", "Create")</button>
+</p>
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <p>
+        Tìm tên sản phẩm: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" />
+    </p>
+}
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tên
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            Miêu tả
+        </th>
+        <th>
+            Giá(VNĐ)
+        </th>
+        <th>
+            Thông tin thêm
+        </th>
+        <th>
+            Năm sản xuất
+        </th>
+        <th>
+            Khối lượng(Kg)
+        </th>
+        <th>
+            CPU
+        </th>
+        <th>
+            RAM(GB)
+        </th>
+        <th>
+            Màu sắc
+        </th>
+        <th>
+            Hệ điều hành
+        </th>
+        <th>
+            Độ phân giải(inches)
+        </th>
+        <th>
+            Chất liệu
+        </th>
+        <th>
+            Tốc độ(HZ)
+        </th>
+        <th>
+            Pin(MMA)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width: 600px">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <img src="@Url.Content("~/Content/images/items/" + item.Avater)" width="100" />
+            </td>
+            <td>
+                @Html.Raw(item.FullDescription)
+            </td>
+            <td>
+
+                @String.Format("{0:0,0}", item.Price) VNĐ
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CPU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RAM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Resolution)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Battery)
+            </td>
+            <td>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-warning"> @Html.ActionLink("Sửa", "Edit", new { id = item.Id })</button>
+                    <button type="button" class="btn btn-info"> @Html.ActionLink("Xem", "Details", new { id = item.Id })</button>
+                    <button type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.Id })</button>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.currentFilter }))
